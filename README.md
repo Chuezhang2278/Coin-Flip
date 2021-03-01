@@ -27,7 +27,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 ![alt text](https://i.imgur.com/HBVOzye.png)
 ![alt text](https://i.imgur.com/Mko07aQ.png)
 
-4. `Swap back to the second wallet (Player) and press player_reveal then compute_result`
+4. `Swap back to the second wallet (Player) and press player_reveal then compute_result`<br>
 *An error will be thrown if you try to press player_reveal on the first wallet* <br>
 ![alt text](https://i.imgur.com/UFYhLNH.png)
 ![alt text](https://i.imgur.com/KtqCOyk.png)
