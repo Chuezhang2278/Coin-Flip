@@ -17,16 +17,17 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 <br> *Make sure that you deploy with a value set to initialize the contract with I.E. 1 wei otherwise you will get an error!*
 ![alt text](https://i.imgur.com/X3YcLO6.png)
 
-2. `After deployment, swap to another wallet and commit a value "1" (tails) or "0" (heads) to the 'player_commit' button and pay 1 wei`
+2. `After deployment swap to another wallet (Player) and commit a value "1" (tails) or "0" (heads) to the 'player_commit' button and pay 1 wei`
 <br> *To pay 1 wei, just make sure the "value" above the deploy button is 1 and the tab is set to wei then press player_commit*
 ![alt text](https://i.imgur.com/EAo29I2.png)
 
-3. `Go back to the first wallet you used to deploy the contract and press 'casino_commit'`
+3. `Go back to the first wallet (Casino) you used to deploy the contract, and press 'casino_commit'`
+   `OR you can stay in the current wallet (Player) and try the refund button to end the game (only works if the casino failed to commit in 15 seconds)`
 <br> *This is a temporary method we are using to test the game out, method will not be present in Final Project* 
 ![alt text](https://i.imgur.com/HBVOzye.png)
 ![alt text](https://i.imgur.com/Mko07aQ.png)
 
-4. `Swap back to the second wallet and press player_reveal then compute_result`
+4. `Swap back to the second wallet (Player) and press player_reveal then compute_result`
 *An error will be thrown if you try to press player_reveal on the first wallet* <br>
 
 ![alt text](https://i.imgur.com/UFYhLNH.png)
