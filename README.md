@@ -18,25 +18,23 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 ![alt text](https://i.imgur.com/X3YcLO6.png)
 
 2. `After deployment swap to another wallet (Player) and commit a value "1" (tails) or "0" (heads) to the 'player_commit' button and pay 1 wei`
-<br> *To pay 1 wei, just make sure the "value" above the deploy button is 1 and the tab is set to wei then press player_commit*
+<br> *To pay 1 wei, just make sure the "value" above the deploy button is 1 and the tab is set to wei then press player_commit* <br>
 ![alt text](https://i.imgur.com/EAo29I2.png)
 
-3. `Go back to the first wallet (Casino) you used to deploy the contract, and press 'casino_commit'`
-   <br>
-   `OR you can stay in the current wallet (Player) and try the refund button to end the game (only works if the casino failed to commit in 15 seconds)` 
-<br> *This is a temporary method we are using to test the game out, method will not be present in Final Project* <br> 
+3. `Go back to the first wallet (Casino) you used to deploy the contract, and press 'casino_commit'` <br>
+   `OR you can stay in the current wallet (Player) and try the refund button to end the game (only works if the casino failed to commit in 15 seconds)` <br>
+*This is a temporary method we are using to test the game out, method will not be present in Final Project* <br> 
 ![alt text](https://i.imgur.com/HBVOzye.png)
 ![alt text](https://i.imgur.com/Mko07aQ.png)
 
 4. `Swap back to the second wallet (Player) and press player_reveal then compute_result`
-<br> *An error will be thrown if you try to press player_reveal on the first wallet* <br>
-
+*An error will be thrown if you try to press player_reveal on the first wallet* <br>
 ![alt text](https://i.imgur.com/UFYhLNH.png)
 ![alt text](https://i.imgur.com/KtqCOyk.png)
 ![alt text](https://i.imgur.com/9LZvcCn.png)
 
-5. `Press the blue 'result' button to see whether you win or lose`
-<br> *You can also check the casino balance to see any changes* <br>
+5. `Press the blue 'result' button to see whether you win or lose` <br>
+*You can also check the casino balance to see any changes* <br>
 ![alt text](https://i.imgur.com/Mzu66WM.png)
 ![alt text](https://i.imgur.com/yYeOXDj.png)
 
