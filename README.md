@@ -14,11 +14,11 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 - ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Blue Buttons are for information!`
 #### How to use
 1. `Download our CoinFlip.sol file and deploy using RemixIDE.`
-</br>  Make sure that you deploy with a value set to initialize the contract with I.E. 1 wei otherwise you will get an error!
+</br> *Make sure that you deploy with a value set to initialize the contract with I.E. 1 wei otherwise you will get an error!*
 2. `After deployment, swap to another wallet and commit a value "1" (tails) or "0" (heads) to the 'player_commit' button and pay 1 wei`
-</br> To pay 1 wei, just make sure the "value" above the deploy button is 1 and the tab is set to wei then press player_commit 
+</br> *To pay 1 wei, just make sure the "value" above the deploy button is 1 and the tab is set to wei then press player_commit*
 3. `Go back to the first wallet you used to deploy the contract and press 'casino_commit'`
-</br>  This is a temporary method we are using to test the game out, method will not be present in Final Project 
+</br> *This is a temporary method we are using to test the game out, method will not be present in Final Project* 
 4. `Swap back to the second wallet and press player_reveal then compute_result`
 5. `Press the blue 'result' button to see whether you win or lose`
 
