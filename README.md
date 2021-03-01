@@ -4,9 +4,7 @@
 - RemixIDE
 ## Disclaimer
 There are some particular bugs that we are aware about that cannot be fixed 
-- At times when trying to use compute_result button, an error will be thrown saying that the called function should be payable... 
-</br>
-if such an error occurs, please refresh the webpage and redo instruction steps. The error seems to be caused by too long of a delay or if a function is run right before another function is complete. I.E you press commit_player then immediately press commit_casino.
+- At times when trying to use compute_result button, an error will be thrown saying that the called function should be payable...if such an error occurs, please refresh the webpage and redo instruction steps. The error seems to be caused by too long of a delay or if a function is run right before another function is complete. I.E you press commit_player then immediately press commit_casino.
 ## Instructions 
 In this demo, we will **NOT** be using chainlinkVRF for compilation reason.
 </br>
