@@ -23,7 +23,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 
 3. `Go back to the first wallet (Casino) you used to deploy the contract, and press 'casino_commit'`
    `OR you can stay in the current wallet (Player) and try the refund button to end the game (only works if the casino failed to commit in 15 seconds)`
-<br> *This is a temporary method we are using to test the game out, method will not be present in Final Project* 
+*This is a temporary method we are using to test the game out, method will not be present in Final Project* <br> 
 ![alt text](https://i.imgur.com/HBVOzye.png)
 ![alt text](https://i.imgur.com/Mko07aQ.png)
 
