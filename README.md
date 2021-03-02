@@ -39,4 +39,13 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 *Game number is incremented by 1 per game initiated, first game index is 0. Balance is the contracts balance* <br>
 ![alt text](https://i.imgur.com/1djH4Mp.png)
 
+#### Unit Test
+` If you wish to confirm our Unit Tests, download and import our unit test into Remix. ` <br>
+*Be sure that the the unit test file is in the correct directory "tests" and that coinFlip.sol is being imported from the right directory in the code itself. Please change that as you see fit* <br>
+![alt text](https://i.imgur.com/NzvyqvO.png)
+` Afterwards just press the run button `
+![alt text](https://i.imgur.com/cfLXtzg.png)
+
+
+
 
