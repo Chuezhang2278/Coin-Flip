@@ -21,7 +21,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 <br> *To pay 1 wei, just make sure the "value" above the deploy button is 1 and the tab is set to wei then press player_commit* <br>
 ![alt text](https://i.imgur.com/EAo29I2.png)
 
-2.1 `If you wish to test the multiplayer capabilities then make different commits using different wallets`
+2.1 `If you wish to test the multiplayer capabilities then make different commits using different wallets` <br>
 
 3. `Go back to the first wallet (Casino) you used to deploy the contract, and press 'casino_commit'` <br>
    `OR you can stay in the current wallet (Player) and try the refund button to end the game (only works if the casino failed to commit in 15 seconds)` <br>
@@ -39,11 +39,11 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 *Game number is incremented by 1 per game initiated, first game index is 0. Balance is the contracts balance* <br>
 ![alt text](https://i.imgur.com/1djH4Mp.png)
 
-#### Unit Test
-` If you wish to confirm our Unit Tests, download and import our unit test into Remix. ` <br>
+#### Unit Tests
+1. ` If you wish to confirm our Unit Tests, download and import our unit test into Remix. ` <br>
 *Be sure that the the unit test file is in the correct directory "tests" and that coinFlip.sol is being imported from the right directory in the code itself. Please change that as you see fit* <br>
-![alt text](https://i.imgur.com/NzvyqvO.png)
-` Afterwards just press the run button `
+![alt text](https://i.imgur.com/NzvyqvO.png) 
+2. ` Afterwards just press the run button ` <br>
 ![alt text](https://i.imgur.com/cfLXtzg.png)
 
 
