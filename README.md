@@ -38,6 +38,6 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 5. `In the Games tab, enter the game number you are in 0-.....n` <br>
 *Game number is incremented by 1 per game initiated, first game index is 0* <br>
 NEED TO UPDATE THE IMAGES
-![alt text](https://i.imgur.com/Mzu66WM.png)
-![alt text](https://i.imgur.com/yYeOXDj.png)
+![alt text](https://i.imgur.com/1djH4Mp.png)
+
 
