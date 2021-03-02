@@ -9,24 +9,29 @@ contract CoinFlip is VRFConsumerBase {
     bytes32 internal keyHash;
     uint internal fee;
     uint public balance;
-    uint public randomResult;
-    string public result;
-    uint public startTime;
-    uint public refundWaitTime = 15; // in seconds
+    uint refundWaitTime = 25;
+    address payable casino_addr;
+
+    enum State {Created, Player, Casino, Reveal, Result, Finished}
     
-    enum Choice {Head, Tail}
-    enum State {Created, Player, Casino, Reveal, Result}
-    State public state;
-    
-    struct commitment {
-        bytes32 hash_val;
-        Choice choice;
-        address payable addr;
+    struct Game {
+        State state;
+        
+        address payable player_addr;
+        uint player_choice;
+        bytes32 player_hash;
+        
+        uint casino_choice;
+        bytes32 casino_hash;
+        
+        uint startTime;
+        uint randomResult;
+        string result;
     }
     
-    commitment public player;
-    commitment public casino;
-        
+    Game[] public Games;
+    Game[] public FinishedGames; // TESTING PURPOSES
+    
     constructor() 
         VRFConsumerBase(
             0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9, // VRF Coordinator
@@ -40,17 +45,18 @@ contract CoinFlip is VRFConsumerBase {
     }
     
     modifier onlyPlayer() {
-        require(msg.sender != casino.addr, "Only player can call this function");
+        require(msg.sender != casino_addr, "Only player can call this function");
         _;
     }
     
     modifier onlyCasino() {
-        require(msg.sender == casino.addr, "Only casino can call this function");
+        require(msg.sender == casino_addr, "Only casino can call this function");
         _;
     }
     
     modifier inState(State _state) {
-        require(state == _state, "Invalid state.");
+        int idx = get_game_idx(msg.sender);
+        require(idx != -1 && Games[uint(idx)].state == _state, "Invalid state.");
         _;
     }
     
@@ -66,7 +72,7 @@ contract CoinFlip is VRFConsumerBase {
      * Callback function used by VRF Coordinator
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        randomResult = randomness;
+        // randomResult = randomness;
     }
     
     function hash(uint256 _choice, address _addr, uint256 _num) internal pure returns (bytes32)
@@ -76,30 +82,32 @@ contract CoinFlip is VRFConsumerBase {
     
     
     function contract_created(address payable addr, uint256 bal) internal {
-        casino.addr = addr; 
+        casino_addr = addr; 
         balance = bal; // in units of wei
-        state = State.Player;
     }
     
     function player_commit(uint256 _val) 
         public payable
         onlyPlayer
-        inState(State.Player)
     {
+        require(get_game_idx(msg.sender) == -1, "You are already playing a casino game (1 game at a time)!");
         require(balance > 0, "Casino contract ran out of money to play with right now.");
-        require(msg.value == 1 wei);
+        require(msg.value == 1 wei, "You must pay 1 wei to play the game!");
         require(_val == 0 || _val == 1, "Input should be 0 or 1");
-        player.addr = msg.sender;
-        balance += msg.value; // how much wei the player sent to this contract
         // getRandomNumber(uint256(casino.addr));
-        randomResult = uint(100);
-        if(_val == 0) 
-            player.choice = Choice.Head;
-        else 
-            player.choice = Choice.Tail;
-        player.hash_val = hash(uint(player.choice), player.addr, randomResult);
-        startTime = block.timestamp;
-        state = State.Casino;
+        uint randomResult = uint(100); // ***** THE RANDOM RESULT SHOULD BE DIFFERENT FOR EACH GAME BUT FOR NOW WE WILL USE 100, MEANING CASINO WILL ALWAYS CHOOSE 0 ***** 
+        Game memory newGame = Game(
+            State.Casino, // game State
+            msg.sender, // player address
+            _val, // player choice
+            hash(uint(_val), msg.sender, randomResult), // player hash
+            0, // casino choice
+            0, // casino hash
+            block.timestamp, // start time
+            randomResult, // random result
+            ''); // result
+        Games.push(newGame);
+        balance += msg.value; // how much wei the player sent to this contract
     }
     
     function player_refund() 
@@ -107,24 +115,29 @@ contract CoinFlip is VRFConsumerBase {
         onlyPlayer
         inState(State.Casino)
     {
-        require(block.timestamp - refundWaitTime >= startTime, "Need to wait longer before you can refund.");
+        int idx = get_game_idx(msg.sender);
+        require(idx != -1, "You are not in any of the casino games!");
+        Game storage game = Games[uint(idx)];
+        require(block.timestamp - refundWaitTime >= game.startTime, "Need to wait longer before you can refund.");
         balance -= 1;
-        player.addr.transfer(1);
-        resetGame();
+        game.player_addr.transfer(1);
+        game.state = State.Finished;
+        resetGame(); 
     }
     
-    function casino_commit() 
+    // Casino commits to each of the active games with a new random number for each (but we are using 100 for testing)
+    function casino_commit_all_games() 
         public 
         onlyCasino
-        inState(State.Casino)
     {
-        require(randomResult != 0, "Random number is still being generated");
-        if(randomResult % 2 == 0)
-            casino.choice = Choice.Head;
-        else 
-            casino.choice = Choice.Tail;
-        casino.hash_val = hash(randomResult % 2, address(this), randomResult);
-        state = State.Reveal;
+        for(uint i = 0; i < Games.length; i ++) {
+            Game storage game = Games[i];
+            if(game.state == State.Casino && game.randomResult != 0) {
+                game.casino_choice = game.randomResult % 2;
+                game.casino_hash = hash(game.randomResult % 2, address(this), game.randomResult);
+                game.state = State.Reveal;
+            }
+        }
     }
     
     function player_reveal() 
@@ -132,59 +145,80 @@ contract CoinFlip is VRFConsumerBase {
         onlyPlayer
         inState(State.Reveal)
     {
-        require(hash(uint(player.choice), player.addr, randomResult) == player.hash_val, "Player Choice has been changed illegally");
-        require(hash(randomResult % 2, address(this), randomResult) == casino.hash_val, "Choice has been changed illegally");
-        state = State.Result;
+        int idx = get_game_idx(msg.sender);
+        require(idx != -1, "You are not in any of the casino games!");
+        Game storage game = Games[uint(idx)];
+        require(hash(uint(game.player_choice), game.player_addr, game.randomResult) == game.player_hash, "Player Choice has been changed illegally");
+        require(hash(game.randomResult % 2, address(this), game.randomResult) == game.casino_hash, "Choice has been changed illegally");
+        game.state = State.Result;
     }
     
     function compute_result() 
         public 
+        onlyPlayer
         inState(State.Result)
     {
-        if(player.choice == casino.choice) {
-            player.addr.transfer(2);
+        int idx = get_game_idx(msg.sender);
+        require(idx != -1, "You are not in any of the casino games!");
+        Game storage game = Games[uint(idx)];
+        if(game.player_choice == game.casino_choice) {
+            game.player_addr.transfer(2);
             balance -= 2;
-            result = "Player win, the money goes to the Player!";
+            game.result = "Player win, the money goes to the Player!";
         } else {
-            result = "Player lose, the money stays in the Casino contract!";
+            game.result = "Player lose, the money stays in the Casino contract!";
         }
-        resetGame();
+        game.state = State.Finished;
+        resetGame(); 
     }
     
     function return_my_money() // for testing purposes in case the contract is broken, hopefully you can get back your fake eth with this or else it gone forever, stuck in the contract
-        public
+        internal
         onlyCasino
     {
         balance -= address(this).balance;
-        casino.addr.transfer(address(this).balance);
+        casino_addr.transfer(address(this).balance);
     }
     
     function resetGame() 
         internal
     {
-        delete player;
-        delete casino.choice;
-        delete casino.hash_val;
-        state = State.Player;
+        int idx = get_game_idx(msg.sender);
+        require(idx != -1, "Player not in any of the casino games!");
+        remove_player(uint(idx)); // ***** FOR TESTING PURPOSES, I WILL REMOVE TO THE FINISHED GAMES ARRAY ******
+    }
+    
+    function remove_player(uint index) 
+        internal 
+    {
+        if (index >= Games.length) return;
+        
+        FinishedGames.push(Games[index]);
+        
+        for (uint i = index; i<Games.length-1; i++){
+            Games[i] = Games[i+1];
+        }
+        Games.pop();
     }
     
     function get_casino() internal view returns(address payable) {
-        return casino.addr;
+        return casino_addr;
     }
     
-    function get_casino_choice() view internal returns(uint256) {
-        return uint256(casino.choice);
-    }
     
-    function get_player() internal view returns(address payable) {
-        return player.addr;
-    }
-    
-    function get_player_choice() internal view returns(uint256) {
-        return uint256(player.choice);
-    }
     function get_balance() internal view returns(uint256) {
         return balance;
     }
+    
+    function get_game_idx(address addr) internal view returns(int) {
+        if(Games.length == 0)
+            return -1;
+        for(uint i = 0; i < Games.length; i ++) {
+            if(Games[i].player_addr == addr)
+                return int(i);
+        }
+        return -1;
+    }
+
     
 }
