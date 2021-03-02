@@ -36,7 +36,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 ![alt text](https://i.imgur.com/9LZvcCn.png)
 
 5. `In the Games tab, enter the game number you are in 0-.....n` <br>
-*Game number is incremented by 1 per game initiated, first game index is 0* <br>
+*Game number is incremented by 1 per game initiated, first game index is 0. Balance is the contracts balance* <br>
 ![alt text](https://i.imgur.com/1djH4Mp.png)
 
 
