@@ -25,7 +25,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 
 3. `Go back to the first wallet (Casino) you used to deploy the contract, and press 'casino_commit'` <br>
    `OR you can stay in the current wallet (Player) and try the refund button to end the game (only works if the casino failed to commit in 15 seconds)` <br>
-*This is a temporary method we are using to test the game out, method will not be present in Final Project* <br> 
+*This is a temporary method we are using to test the game out, method will not be present in Final Project* <br> <br>
 ![alt text](https://i.imgur.com/HBVOzye.png)
 ![alt text](https://i.imgur.com/Mko07aQ.png)
 
@@ -43,7 +43,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 1. ` If you wish to confirm our Unit Tests, download and import our unit test into Remix. ` <br>
 *Be sure that the the unit test file is in the correct directory "tests" and that coinFlip.sol is being imported from the right directory in the code itself. Please change that as you see fit* <br>
 ![alt text](https://i.imgur.com/NzvyqvO.png) 
-2. ` Afterwards just press the run button ` <br>
+2. ` Afterwards just press the run button ` <br> <br>
 ![alt text](https://i.imgur.com/cfLXtzg.png)
 
 
