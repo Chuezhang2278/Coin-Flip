@@ -27,7 +27,7 @@ contract CoinFlipTest is CoinFlip{
     function testContractCreated() public payable {
         Assert.equal(msg.sender, acc0, 'acc0 should be the sender of this function check');
         Assert.equal(msg.value, 5, '2 should be the value of this function check');
-        contract_created(msg.sender, msg.value);
+        contract_created();
         Assert.equal(get_balance(), msg.value, 'balance of contract should be 5 (how much casino put in)');
         Assert.equal(get_casino(), msg.sender, 'casino should be set to acc1');
     }
@@ -67,6 +67,12 @@ contract CoinFlipTest is CoinFlip{
         Assert.equal(Games.length, 2, "Number of games in the contract should be 2 now.");
     }
     
+    function testCasinoRandom() public {
+        for(uint i = 0; i < Games.length; i ++) {
+            Assert.notEqual(Games[i].randomResult, 0, "Random should not be 0");
+        }
+    }
+    
     // Balance should be 5 (initial) + 2 (player1 and player2) = 7 total
     function checkBalance() public {
         Assert.equal(get_balance(), 7, "Balance should be 5 (initial) + 2 (player1 and player2) = 7");
@@ -97,7 +103,7 @@ contract CoinFlipTest is CoinFlip{
     function testPlayer1Results() public {
         uint init_balance = get_balance();
         compute_result();
-        Assert.equal(get_balance(), init_balance - 2, 'Balance of contract should be 5 (7 - 2 from loss');
+        // Assert.equal(get_balance(), init_balance - 2, 'Balance of contract should be 5 (7 - 2 from loss'); // Cannot test with working randomness
         Assert.equal(uint(FinishedGames[0].state), 5, 'State should be Finished state after successful compute result.');
     }
     
@@ -116,13 +122,15 @@ contract CoinFlipTest is CoinFlip{
     function testPlayer2Results() public {
         uint init_balance = get_balance();
         compute_result();
-        Assert.equal(get_balance(), init_balance - 0, 'Balance of contract should be 5 (5 - 0 from winning');
+        // Assert.equal(get_balance(), init_balance - 0, 'Balance of contract should be 5 (5 - 0 from winning'); // Cannot test with working randomness
         Assert.equal(uint(FinishedGames[1].state), 5, 'State should be Finished state after successful compute result.');
     }
     
+    /*
     function checkBalanceAfterOneWinOneLoss() public {
         Assert.equal(get_balance(), 5, "Balance should be 5 [5 (init) + 1 (player 1) + 1 (player 2) - 2 (loss) - 0 (win) = 5]");
     }
+    */
     
     // Account 1 starts another game with 1 wei and submits a choice of 0.
     // Tests if player choice is commited correctly and if the balance of the contract increased.
@@ -164,7 +172,7 @@ contract CoinFlipTest is CoinFlip{
     function testPlayer1ResultsAgain() public {
         uint init_balance = get_balance();
         compute_result();
-        Assert.equal(get_balance(), init_balance - 2, 'Balance of contract should be 3 (5 - 2 from loss');
+        // Assert.equal(get_balance(), init_balance - 2, 'Balance of contract should be 3 (5 - 2 from loss'); //// Cannot test with working randomness
         Assert.equal(uint(FinishedGames[2].state), 5, 'State should be Finished state after successful compute result.');
     }
 }
