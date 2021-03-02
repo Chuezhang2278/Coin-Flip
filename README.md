@@ -12,7 +12,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 #### Legend
 - ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) ![#ff9900](https://via.placeholder.com/15/ff9900/000000?text=+) `Red and Orange Buttons are for interactions!`
 - ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Blue Buttons are for information!`
-#### How to use
+#### How to use (tentative) 
 1. `Download our CoinFlip.sol file and deploy using RemixIDE.`
 <br> *Make sure that you deploy with a value set to initialize the contract with I.E. 1 wei otherwise you will get an error!*
 ![alt text](https://i.imgur.com/X3YcLO6.png)
@@ -20,6 +20,8 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 2. `After deployment swap to another wallet (Player) and commit a value "1" (tails) or "0" (heads) to the 'player_commit' button and pay 1 wei`
 <br> *To pay 1 wei, just make sure the "value" above the deploy button is 1 and the tab is set to wei then press player_commit* <br>
 ![alt text](https://i.imgur.com/EAo29I2.png)
+
+2.1 `If you wish to test the multiplayer capabilities then make different commits using different wallets`
 
 3. `Go back to the first wallet (Casino) you used to deploy the contract, and press 'casino_commit'` <br>
    `OR you can stay in the current wallet (Player) and try the refund button to end the game (only works if the casino failed to commit in 15 seconds)` <br>
@@ -33,8 +35,9 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 ![alt text](https://i.imgur.com/KtqCOyk.png)
 ![alt text](https://i.imgur.com/9LZvcCn.png)
 
-5. `Press the blue 'result' button to see whether you win or lose` <br>
-*You can also check the casino balance to see any changes* <br>
+5. `In the Games tab, enter the game number you are in 0-.....n` <br>
+*Game number is incremented by 1 per game initiated, first game index is 0* <br>
+NEED TO UPDATE THE IMAGES
 ![alt text](https://i.imgur.com/Mzu66WM.png)
 ![alt text](https://i.imgur.com/yYeOXDj.png)
 
