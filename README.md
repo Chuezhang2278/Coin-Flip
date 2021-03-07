@@ -14,7 +14,7 @@ We have run into some bugs regarding chainlinkVRF and will not be using it in th
 - ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `Blue Buttons are for information!`
 #### How to use (tentative) 
 1. `Download our CoinFlip.sol file and deploy using RemixIDE.`
-<br> *Make sure that you deploy with a value set to initialize the contract with I.E. 1 wei otherwise you will get an error!*
+<br> *Make sure that you deploy with a value set to initialize the contract with I.E. 1 wei otherwise you will get an error!* <br>
 ![alt text](https://i.imgur.com/X3YcLO6.png)
 
 2. `After deployment swap to another wallet (Player) and commit a value "1" (tails) or "0" (heads) to the 'player_commit' button and pay 1 wei`
